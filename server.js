@@ -10,11 +10,23 @@ const port = 8000;
 const upload = multer();
 
 // CORS setup
+const allowedOrigins = [
+  "http://localhost:5173", // for development
+  "http://test.webwaps.in/", // for production
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Or '*' for all origins (development)
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
