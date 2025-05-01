@@ -12,17 +12,11 @@ const upload = multer();
 // CORS setup
 app.use(
   cors({
-    origin: "http://test.webwaps.in/", // Or '*' for all origins (development)
+    origin: "*", // Or '*' for all origins (development)
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
-    credentials: true,
   })
 );
-
-app.options("*", cors()); // preflight support
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 const validateEmail = (email) => {
   var re = /\S+@\S+\.\S+/;
